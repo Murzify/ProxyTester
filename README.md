@@ -7,3 +7,7 @@ ProxyTester тестирует прокси на работоспособнос�
 ```sh
 python proxy_tester.py
 ```
+или
+```sh
+proxy_tester.exe
+```
