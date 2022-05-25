@@ -1,60 +1,42 @@
-import os, time, json
+import os, time, json, requests
 
 try:
-    import requests
-    from colorama import init, Back, Fore
-    from bs4 import BeautifulSoup as bs
+	import requests
 except:
-    print("Установка модклей...")
-    os.system("pip install -r requirements.txt")
-    print("Запустите файл снова!")
-    exit()
-
-init()
-banner = Fore.BLUE +\
-"""
- ███████████                                            ███████████                   █████                      
-░░███░░░░░███                                          ░█░░░███░░░█                  ░░███                       
- ░███    ░███ ████████   ██████  █████ █████ █████ ████░   ░███  ░   ██████   █████  ███████    ██████  ████████ 
- ░██████████ ░░███░░███ ███░░███░░███ ░░███ ░░███ ░███     ░███     ███░░███ ███░░  ░░░███░    ███░░███░░███░░███
- ░███░░░░░░   ░███ ░░░ ░███ ░███ ░░░█████░   ░███ ░███     ░███    ░███████ ░░█████   ░███    ░███████  ░███ ░░░ 
- ░███         ░███     ░███ ░███  ███░░░███  ░███ ░███     ░███    ░███░░░   ░░░░███  ░███ ███░███░░░   ░███     
- █████        █████    ░░██████  █████ █████ ░░███████     █████   ░░██████  ██████   ░░█████ ░░██████  █████    
-░░░░░        ░░░░░      ░░░░░░  ░░░░░ ░░░░░   ░░░░░███    ░░░░░     ░░░░░░  ░░░░░░     ░░░░░   ░░░░░░  ░░░░░     
-                                              ███ ░███                                                           
-                                             ░░██████                                                            
-                                              ░░░░░░                                                             
-"""
-
-print(banner)
+	print("Установка модклей...")
+	os.system("pip install -r requirements.txt")
+	print("Запустите файл снова!")
+	exit()
 
 with open("proxies.json") as p:
-    proxies = json.load(p)["proxies"]
+	proxies = json.load(p)["proxies"]
 p.close()
+
 for proxy in proxies:
-    protocol = proxy.split("://")[0]
-    ip = proxy.split("://")[1].split(":")[0]
-    p = {
-        protocol: proxy
-    }
+	r = requests.get(f"http://ip-api.com/json/")
+	real_ip = json.loads(r.text)["query"]
+	protocol = proxy.split("://")[0]
 
-    try:
-        t1 = time.time()
-        r = requests.get("https://2ip.ru/", proxies=p)
-        t2 = time.time()
-        speed = t2 - t1
-    except requests.exceptions.ProxyError as err:
-        print(Fore.WHITE, Back.RED, f"{proxy} : не удалось подключится")
-        print(Fore.WHITE, Back.RED, str(err).split("[WinError 10060] ")[1].replace("')))", ""), "\n")
-        # print("Error:\n", err)
-        continue
+	p = {
+		protocol: proxy
+	}
 
-    html = r.text
-    soup = bs(html, "html.parser")
-    find = soup.find_all("div", class_="ip")
-    if ip in find[0].text:
-        print(Fore.WHITE, Back.GREEN, f"{proxy} : работет!\nSpeed: {round(speed, 3)}s\n")
-    else:
-        print(Fore.WHITE, Back.RED, f"{proxy} : ip не изменился\n")
+	try:
+		t1 = time.time()
+		r = requests.get(f"http://ip-api.com/json/", proxies=p)
+		data = json.loads(r.text)
+		t2 = time.time()
+		speed = t2 - t1
+	except requests.exceptions.ProxyError as err:
+		print(f"{proxy} : не удалось подключится")
+		continue
+	except requests.exceptions.ConnectTimeout as err:
+		print(f"{proxy} : не удалось подключится")
+		continue
+
+	if real_ip != data["query"]:
+		print(f"{proxy} : работет!\nSpeed: {round(speed, 3)}s\n")
+	else:
+		print(f"{proxy} : ip не изменился\n")
 
 input("Press Enter to exit...")
