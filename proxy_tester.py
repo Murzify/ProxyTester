@@ -13,8 +13,10 @@ with open("proxies.json") as p:
 p.close()
 
 for proxy in proxies:
+	r = requests.get(f"http://ip-api.com/json/")
+	real_ip = json.loads(r.text)["query"]
 	protocol = proxy.split("://")[0]
-	ip = proxy.split("://")[1].split(":")[0]
+
 	p = {
 		protocol: proxy
 	}
@@ -32,7 +34,7 @@ for proxy in proxies:
 		print(f"{proxy} : не удалось подключится")
 		continue
 
-	if ip in data["query"]:
+	if real_ip != data["query"]:
 		print(f"{proxy} : работет!\nSpeed: {round(speed, 3)}s\n")
 	else:
 		print(f"{proxy} : ip не изменился\n")
