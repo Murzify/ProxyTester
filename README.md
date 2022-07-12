@@ -12,7 +12,7 @@ pip -r requirements.txt
 python proxy_tester.py
 ```
 
-## Участники проекта ✨
+## Участники проекта ✨ ([emoji key](https://allcontributors.org/docs/en/emoji-key))
 <table>
   <tr>
     <td align="center">
