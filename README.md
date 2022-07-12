@@ -5,7 +5,9 @@
 pip -r requirements.txt
 ```
 
-2. Запустите main.py
+2. Для тестирования прокси укажите их в файл proxies.json
+
+3. Запустите main.py
 ```sh
 python main.py
 ```
