@@ -7,9 +7,9 @@ pip -r requirements.txt
 
 2. Для тестирования прокси укажите их в файл proxies.json
 
-3. Запустите main.py
+3. Запустите proxy_tester.py
 ```sh
-python main.py
+python proxy_tester.py
 ```
 
 ## Участники проекта ✨
