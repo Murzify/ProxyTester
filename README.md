@@ -2,7 +2,7 @@
 
 1. Скачайте все необходимые модули
 ```sh
-pip -r requirements.txt
+pip install -r requirements.txt
 ```
 
 2. Для тестирования прокси укажите их в файл proxies.json
