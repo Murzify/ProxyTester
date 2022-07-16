@@ -7,9 +7,9 @@ pip install -r requirements.txt
 
 2. Для тестирования прокси укажите их в файл proxies.json
 
-3. Запустите proxy_tester.py
+3. Запустите main.py
 ```sh
-python proxy_tester.py
+python main.py
 ```
 
 ## Участники проекта ✨ ([emoji key](https://allcontributors.org/docs/en/emoji-key))
