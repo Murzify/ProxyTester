@@ -17,7 +17,7 @@
 import os, time, json, requests
 
 try:
-    import requests
+   import requests
 except:
     print("Установка необходимых модулей...")
     os.system("pip install -r requirements.txt")
@@ -51,8 +51,9 @@ for proxy in proxies:
         continue
 
     if real_ip != data["query"]:
-        print(f"{proxy} : работет!\nSpeed: {round(speed, 3)}s\n")
+        print(f"{proxy} : работет!"
+              "\nSpeed: {round(speed, 3)}s\n")
     else:
         print(f"{proxy} : ip не изменился\n")
 
-input("Press Enter to exit...")
+input("Нажмите любую клавишу для выхода...")
