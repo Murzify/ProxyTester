@@ -19,7 +19,7 @@ import os, time, json, requests
 try:
     import requests
 except:
-    print("Установка модклей...")
+    print("Установка необходимых модулей...")
     os.system("pip install -r requirements.txt")
     print("Запустите файл снова!")
     exit()
